@@ -1,4 +1,4 @@
-# Convert SSA results to DSS
+# Modify Unsteady FLow Data
 
 This project modifies HEC-RAS unsteady flow files to quickly apply DSS data.
 
@@ -7,7 +7,7 @@ This project modifies HEC-RAS unsteady flow files to quickly apply DSS data.
 
 ## 🎯 Purpose
 
-This github project was made for Hydrologists working with SSA. Specifically, for acquaintances needing to move data from Autodesk Storm and Sanitary Analysis (SSA) to Hydrologic Engineering Center's River Analysis System (HEC-RAS).
+This github project was made for Hydrologists working with SSA. Specifically, for acquaintances needing to move data from Autodesk Storm and Sanitary Analysis (SSA) to Hydrologic Engineering Center's River Analysis System (HEC-RAS). This program applies the DSS directories into the desired unsteady flow file.
 
 Our Hydraulic models required 300+ timeseries data to be applied to its respective boundary condition line in HEC-RAS. Thus, to save time, this Python Script was made to quickly apply that data. This script is the successor to a GUI manipulation script using pyautogui. It was faster to manipulate the text file than the GUI of HEC-RAS; thus, this script succeeds the HEC-RAS GUI manipulator as a faster implementation.
 
