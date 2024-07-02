@@ -14,9 +14,10 @@ Our Hydraulic models required 300+ timeseries data to be applied to its respecti
 ## ⚡Usage
 ### For exporting flooding flow rate data
 1) Run the file
-2) Declare Unsteady Flow file to manipulate
-3) Select DSS file to apply to Unsteady Flow file
-4) Done!
+2) Declare the HEC-RAS main directory
+3) Declare Unsteady Flow file to manipulate
+4) Select DSS file to apply to Unsteady Flow file
+5) Done!
 
 ## 📖 Documentation
 ### How to create the executable
