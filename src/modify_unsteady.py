@@ -10,11 +10,11 @@ def main():
     dss_abs_file_path = file_dialog.request_open_file("Please provide DSS file")
     
     dss_file_path = ".\\" + relpath(dss_abs_file_path, start=hec_ras_dir)
-    dss_base_path = "/IRREGULAR/TIMESERIES/FLOW/01Jan1990/IR-Decade/"
+    dss_base_internal_path = "/IRREGULAR/TIMESERIES/FLOW/01Jan1990/IR-Decade/"
 
     ustd_processor = UnsteadyFlowFileProcessor()
     # add needed settings to the unsteady flow file processor
-    ustd_processor = ustd_processor.dss_base_path(dss_base_path).dss_file_path(dss_file_path)
+    ustd_processor = ustd_processor.dss_base_internal_path(dss_base_internal_path).dss_file_path(dss_file_path)
     # modify the unsteady flow file
     ustd_processor.run(ustd_dir)
 
@@ -24,12 +24,12 @@ class UnsteadyFlowFileProcessor():
     file's data.
     """
     
-    def dss_base_path(self, dss_base_path):
+    def dss_base_internal_path(self, dss_base_internal_path):
         """
         This method holds the dss base path which is the path inside the dss file needed to find the
         timeseries data.
         """
-        self.dss_base_path = dss_base_path
+        self.dss_base_internal_path = dss_base_internal_path
         return self
     
     def dss_file_path(self, dss_file_path):
@@ -71,9 +71,9 @@ class UnsteadyFlowFileProcessor():
             self.get_bcline_id(row)
             return row
         elif param_name == "DSS File":
-            return "DSS File=" + self.dss_base_path + self.bcline_id + "/\n"
+            return "DSS File=" + self.dss_file_path + "\n"
         elif param_name == "DSS Path":
-            return "DSS Path=" + self.dss_file_path + "\n"
+            return "DSS Path=" + self.dss_base_internal_path + self.bcline_id + "/\n"
         elif param_name == "Use DSS":
             return "Use DSS=True\n"
         else:
