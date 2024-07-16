@@ -72,33 +72,51 @@ class UnsteadyFlowFileProcessor():
         # open file
         self.logger.debug(f"BEGINNING: preprocessing...")
         with open(path_unsteady, "r") as file:
-            # iterate through file
-            rows = file.readlines()
-            # preprocess lines
-            processed_rows = list()
-            for i in range(len(rows)):
-                # process depending on the current param name
-                is_current_bcline_row = rows[i].startswith("Boundary Location")
-                is_next_interval = rows[i].startswith("Interval")
-                self.logger.debug(f"Parameter names: 0:{is_current_bcline_row}, 1:{is_next_interval}")
-                # append current row to processed row
-                processed_rows.append(rows[i])
-                # if current param is Boundary Location and next param is not Interval
-                if is_current_bcline_row and not(is_next_interval):
+            # initialize the iterable values
+            previous_line = None
+            current_line = file.readline()
+            # initialize the loop's output
+            processed_lines = list()
+            while True:
+                # gather this iteration's data
+                previous_line = current_line
+                current_line = file.readline()
+                
+                # stop the loop when file ends
+                if not current_line:
+                    processed_lines.append(previous_line)
+                    break
+
+                # check conditions for each line
+                previous_is_bcline = previous_line.startswith("Boundary Location")
+                current_is_not_interval = not(current_line.startswith("Interval"))
+
+                # log results
+                self.logger.debug((
+                    f"previous line:{repr(previous_line)},{previous_is_bcline}, "
+                    f"current line:{repr(current_line)},{current_is_not_interval}"
+                    ))
+                
+                # append previous line to processed row (always)
+                processed_lines.append(previous_line)
+
+                # if previous line is "Boundary Location" and current line is not "Interval"
+                if previous_is_bcline and current_is_not_interval:
                     # then append new rows to processed row
-                    self.logger.debug(f"Adding new rows")
-                    processed_rows.append("Interval=1HOUR\n")
-                    processed_rows.append("Flow Hydrograph= 0 \n")
-                    processed_rows.append("Stage Hydrograph TW Check=0\n")
-                    processed_rows.append("DSS File=\n")
-                    processed_rows.append("DSS Path=\n")
-                    processed_rows.append("Use DSS=\n")
-                    processed_rows.append("Use Fixed Start Time=False\n")
-                    processed_rows.append("Fixed Start Date/Time=,\n")
-                    processed_rows.append("Is Critical Boundary=False\n")
-                    processed_rows.append("Critical Boundary Flow=\n")
+                    self.logger.debug(f"Missing data after BCline, adding missing rows")
+                    processed_lines.append("Interval=1HOUR\n")
+                    processed_lines.append("Flow Hydrograph= 0 \n")
+                    processed_lines.append("Stage Hydrograph TW Check=0\n")
+                    processed_lines.append("DSS File=\n")
+                    processed_lines.append("DSS Path=\n")
+                    processed_lines.append("Use DSS=\n")
+                    processed_lines.append("Use Fixed Start Time=False\n")
+                    processed_lines.append("Fixed Start Date/Time=,\n")
+                    processed_lines.append("Is Critical Boundary=False\n")
+                    processed_lines.append("Critical Boundary Flow=\n")
+                    
         self.logger.debug(f"COMPLETED: test preprocessing...\n")
-        return processed_rows
+        return processed_lines
     
     def run(self, path_unsteady):
         rows = self._preprocess(path_unsteady)
