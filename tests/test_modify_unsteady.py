@@ -23,11 +23,11 @@ class TestModifyUnsteady():
     Critical Boundary Flow=
     """
     # declare inputs
-    input_path = r"tests\data\ras_model\input01.u01"
+    input_path = r".\tests\data\ras_model\input01.u01"
     dss_path = r".\DSS Files\example-dss.dss"
     dss_base_internal_path = "/IRREGULAR/TIMESERIES/FLOW/01Jan1990/IR-Decade/"
     # declare expected output
-    output_path = r"tests\data\ras_model\output01.u01"
+    output_path = r".\tests\data\ras_model\output01.u01"
     
     def test_modify_unsteady(self):
         logger = logging.getLogger(__name__)
@@ -87,8 +87,8 @@ class TestModifyUnsteady01(TestModifyUnsteady):
     Boundary Location=                ,                ,        ,        ,                ,Perimeter 1     ,                ,PCUNA052                        ,                                
     """
     # declare inputs
-    input_path = r"tests\data\ras_model\input.u01"
+    input_path = r".\tests\data\ras_model\input.u01"
     dss_path = r".\DSS Files\MalateClogged10.dss"
     dss_base_internal_path = "/IRREGULAR/TIMESERIES/FLOW/01Jan1990/IR-Decade/"
     # declare expected output
-    output_path = r"tests\data\ras_model\output.u01"
+    output_path = r".\tests\data\ras_model\output.u01"
