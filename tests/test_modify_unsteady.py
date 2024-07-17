@@ -49,7 +49,7 @@ class TestModifyUnsteady():
         ustd_processor = ustd_processor.dss_base_internal_path(dss_base_internal_path).dss_file_path(dss_path)
         
         try:
-            ustd_processor.run(input_path)
+            ustd_processor.run(input_path, input_path)
         except Exception as e:
             err_msg = f"Failed to complete unsteady flow file modification. {e}"
             logger.error(err_msg)
